@@ -1,11 +1,11 @@
 from django.db import models
+from EmploymentFinder.settings import AUTH_USER_MODEL
 
 # Create your models here.
 
 ## User Model 
 class User(models.Model):
-    User = models.CharField(max_length=255)
-    age = models.IntegerField()
+    User = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
     stats = models.CharField(max_length=1000)
     gmail = models.CharField(max_length=100)
 
@@ -22,7 +22,7 @@ class Job(models.Model):
     company = models.CharField(max_length=255)
     description = models.TextField()
     requirements = models.TextField()
-    category = models.ForeignKey(JobCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(JobCategory, on_delete=models.CASCADE, null=True)
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
     posted_at = models.DateTimeField(auto_now_add=True)
 
