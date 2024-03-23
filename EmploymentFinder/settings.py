@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django_filters',
+    'djoser',
     "rest_framework",
     "jobs",
     'core',
@@ -129,3 +131,22 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "core.user"
+
+import djoser
+
+
+DJOSER = {
+    "SERIALIZERS": {
+        "user_create": "core.serializers.UserCreateSerializer",
+    }
+}
+
+CORS_ORIGIN_ALLOW_ALL = True  # Set to True if you want to allow all origins, or False to specify specific origins
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5500/login.html']  # Add your frontend domain here
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']  # Specify allowed methods
+CORS_ALLOW_HEADERS = ['Content-Type', 'Authorization']  # Specify allowed headers
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+   "ACCESS_TOKEN_LIFETIME": timedelta(days=1)
+}
